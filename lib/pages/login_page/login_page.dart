@@ -1,5 +1,6 @@
 import 'package:app_contable/pages/login_page/bussines_logic/login_logic.dart';
 import 'package:app_contable/pages/register_page/register_page.dart';
+import 'package:app_contable/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -136,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
       final password = _passwordController.text;
       if (await LoginLogic().verifyUser(email, password)) {
         showCustomSnackBar('Logueado');
+        nextPage();
       } else {
         showCustomSnackBar('No existe el usuario');
       }
@@ -151,5 +153,9 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.deepPurple,
       ),
     );
+  }
+  
+  void nextPage() {
+    Navigator.pushNamed(context, Routes.homePage);
   }
 }
