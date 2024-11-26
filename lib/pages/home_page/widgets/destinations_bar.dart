@@ -6,11 +6,15 @@ class DestinationsBar {
       icon: Icon(
         Icons.transfer_within_a_station,
       ),
-      label: 'Transferencias',
+      label: 'Transacciones',
     ),
     NavigationDestination(
       icon: Icon(Icons.money),
       label: 'Presupuesto',
     ),
+    NavigationDestination(
+      icon: Icon(Icons.cloud),
+      label: 'Deudas',
+    )
   ];
 }
