@@ -1,6 +1,8 @@
 import 'package:app_contable/pages/home_page/widgets/destinations_bar.dart';
-import 'package:app_contable/pages/home_page/widgets/transfers_page.dart';
+import 'package:app_contable/pages/home_page/widgets/transaction_page.dart';
 import 'package:flutter/material.dart';
+
+import '../../../routes/routes.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -16,7 +18,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     return SafeArea(
       child: Scaffold(
         body: <Widget>[
-          const TransfersPage(),
+          const TransactionPage(),
           Container(
             color: Colors.blue,
           ),
@@ -36,8 +38,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
           child: const Icon(Icons.add),
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.registerIncomingExpensePage),
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,

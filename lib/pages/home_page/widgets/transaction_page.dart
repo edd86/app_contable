@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TransfersPage extends StatelessWidget {
-  const TransfersPage({super.key});
+class TransactionPage extends StatelessWidget {
+  const TransactionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final List<String> list = List.generate(20, (i) => 'transfer $i');
+    final List<String> list = List.generate(20, (i) => 'Transaction $i');
 
     return Container(
       width: size.width,
@@ -61,9 +61,11 @@ class TransfersPage extends StatelessWidget {
                   leading: const Icon(
                     Icons.money,
                     color: Colors.deepPurple,
+                    size: 18,
                   ),
                   trailing: Text('${index * 25}'),
-                  title: Text(list[index]),
+                  title:
+                      Text(list[index], style: const TextStyle(fontSize: 13)),
                 );
               },
             ),
