@@ -1,6 +1,5 @@
 import 'package:app_contable/pages/login_page/bussines_logic/login_logic.dart';
 import 'package:app_contable/pages/login_page/widgets/background_painter.dart';
-import 'package:app_contable/pages/register_page/register_page.dart';
 import 'package:app_contable/routes/routes.dart';
 import 'package:flutter/material.dart';
 
