@@ -1,18 +1,19 @@
 // ignore_for_file: use_build_context_synchronously, invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
-import 'package:app_contable/repository/incoming_repository.dart';
+import 'package:app_contable/providers/export_providers.dart';
+import 'package:app_contable/repository/expense_repository.dart';
 import 'package:app_contable/repository/transaction_repository.dart';
 import 'package:app_contable/variables/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../bussines_logic/income_expense_logic.dart';
-import 'package:app_contable/providers/export_providers.dart';
 
-final TextEditingController _incomingController = TextEditingController();
+import '../bussines_logic/income_expense_logic.dart';
+
+final TextEditingController _expenseController = TextEditingController();
 final TextEditingController _descriptionController = TextEditingController();
 
-class IncomingWidget extends StatelessWidget {
-  const IncomingWidget({super.key});
+class ExpensesWidget extends StatelessWidget {
+  const ExpensesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +25,10 @@ class IncomingWidget extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: _incomingController,
+              controller: _expenseController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                label: Text('Monto del Ingreso'),
+                label: Text('Monto del Gasto'),
               ),
             ),
             SizedBox(
@@ -47,32 +48,36 @@ class IncomingWidget extends StatelessWidget {
               label: const Text('Registrar'),
               icon: const Icon(Icons.save),
               onPressed: () async {
-                if (_incomingController.text.isEmpty &&
+                if (_expenseController.text.isEmpty &&
                     _descriptionController.text.isEmpty) {
                   _showSnackBar(context, 'Rellena todos los campos');
                 } else {
                   final transaction = IncomeExpenseLogic().createTransaction(
                     DateTime.now(),
-                    'income',
+                    'expense',
                     _descriptionController.text,
-                    double.parse(_incomingController.text),
+                    double.parse(_expenseController.text) * -1,
                     GlobalVariables.userLogged!.id!,
                   );
                   final newTransaction =
                       await TransactionRepository().addTransaction(transaction);
                   if (IncomeExpenseLogic()
                       .validateTransaction(newTransaction)) {
-                    final income = IncomeExpenseLogic().createIncome(
-                        double.parse(_incomingController.text),
-                        newTransaction!.id!);
-                    final newIncome =
-                        await IncomingRepository().addIncome(income);
-                    if (IncomeExpenseLogic().validateIncome(newIncome)) {
-                      _showSnackBar(context, 'Transacción creada exitosamente');
-                      _modifyListeners(context);
-                      _cleanControllers();
+                    if (double.parse(_expenseController.text) > 0.0) {
+                      final expense = IncomeExpenseLogic().createExpense(
+                          double.parse(_expenseController.text),
+                          newTransaction!.id!);
+                      final newExpense =
+                          await ExpenseRepository().addExpense(expense);
+                      if (IncomeExpenseLogic().validationExpense(newExpense)) {
+                        _showSnackBar(context, 'Transacción creada');
+                        _modifyListeners(context);
+                        _cleanControllers();
+                      } else {
+                        _showSnackBar(context, 'Transacción no creada');
+                      }
                     } else {
-                      _showSnackBar(context, 'Transacción no creada');
+                      _showSnackBar(context, "El monto debe ser mayor a 0");
                     }
                   } else {
                     _showSnackBar(context, 'Transacción no creada');
@@ -95,13 +100,13 @@ class IncomingWidget extends StatelessWidget {
     );
   }
 
-  void _cleanControllers() {
-    _incomingController.clear();
-    _descriptionController.clear();
-  }
-  
   void _modifyListeners(BuildContext context) {
     final notifier = Provider.of<TransactionsProvider>(context, listen: false);
     notifier.loadTransactions();
+  }
+
+  void _cleanControllers() {
+    _expenseController.clear();
+    _descriptionController.clear();
   }
 }

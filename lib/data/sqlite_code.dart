@@ -13,6 +13,7 @@ CREATE TABLE Transactions (
   date TEXT NOT NULL,
   type TEXT CHECK (type IN ('income', 'expense')) NOT NULL,
   description TEXT,
+  amount REAL NOT NULL,
   user_id INTEGER,
   FOREIGN KEY (user_id) REFERENCES Users (id)
 );

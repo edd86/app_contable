@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ElevatedButton.icon(
                   onPressed: _submitForm,
                   icon: const Icon(Icons.save),
-                  label: const Text('Guaradar Usuario'),
+                  label: const Text('Guardar Usuario'),
                 )
               ],
             ),
@@ -136,6 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
       final newUser = await UserRepository().addUser(user);
       if (newUser != null) {
         showCustomSnackBar('Usuario creado exitosamente');
+        _navigatePop();
       } else {
         showCustomSnackBar('Usuario no creado');
       }
@@ -151,5 +152,9 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: Colors.deepPurple,
       ),
     );
+  }
+
+  void _navigatePop() {
+    Navigator.pop(context);
   }
 }

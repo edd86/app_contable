@@ -12,4 +12,19 @@ class TransactionRepository {
       return null;
     }
   }
+
+  Future<List<Transaction>?> getTransactions() async {
+    List<Transaction> transactionsRegistered = [];
+    try {
+      final db = await DatabaseHelper().database;
+      final transactions = await db.query('Transactions');
+      for (var element in transactions) {
+        transactionsRegistered.add(Transaction.fromJson(element));
+      }
+      return transactionsRegistered;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }

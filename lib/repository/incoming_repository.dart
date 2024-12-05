@@ -3,7 +3,6 @@ import '../data/database_helper.dart';
 
 class IncomingRepository {
 
-  //TODO: Solucionar bug de addIncome no se registra en la Base de Datos.
   Future<Income?> addIncome(Income income) async {
     try {
       final db = await DatabaseHelper().database;
@@ -15,4 +14,16 @@ class IncomingRepository {
       return null;
     }
   }
+
+  /* Future<double> getAmountByTransactionId(int transactionId) async {
+    try {
+      final db = await DatabaseHelper().database;
+      final result = await db.query('Incomes', where: 'transaction_id = ?', whereArgs: [transactionId]);
+      final income = Income.fromJson(result.first);
+      return income.amount;
+    } catch (e) {
+      print(e.toString());
+      return 0;
+    }
+  } */
 }

@@ -161,6 +161,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void nextPage() {
-    Navigator.pushNamed(context, Routes.homePage);
+    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
   }
 }

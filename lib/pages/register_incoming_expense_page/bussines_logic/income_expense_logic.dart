@@ -1,14 +1,15 @@
+import 'package:app_contable/models/expense.dart';
 import 'package:app_contable/models/income.dart';
 import 'package:app_contable/models/transaction.dart';
 
-
 class IncomeExpenseLogic {
   Transaction createTransaction(
-      DateTime date, String type, String description, int userId) {
+      DateTime date, String type, String description, double amount, int userId) {
     return Transaction(
       date: date.toIso8601String(), //2024-01-01T00:00:00.000Z
       type: type,
       description: description,
+      amount: amount,
       userId: userId,
     );
   }
@@ -23,10 +24,10 @@ class IncomeExpenseLogic {
     return isValid;
   }
 
-  Income createIncome(double parse, int i) {
+  Income createIncome(double amount, int transactioId) {
     return Income(
-      transactionId: i,
-      amount: parse,
+      transactionId: transactioId,
+      amount: amount,
     );
   }
 
@@ -34,6 +35,23 @@ class IncomeExpenseLogic {
     bool isValid = false;
     if (newIncome != null) {
       if (newIncome.id != null) {
+        isValid = true;
+      }
+    }
+    return isValid;
+  }
+
+  Expense createExpense(double amount, int transactioId) {
+    return Expense(
+      amount: amount,
+      transactionId: transactioId,
+    );
+  }
+
+  bool validationExpense(Expense? newExpense) {
+    bool isValid = false;
+    if (newExpense != null) {
+      if (newExpense.id != null) {
         isValid = true;
       }
     }

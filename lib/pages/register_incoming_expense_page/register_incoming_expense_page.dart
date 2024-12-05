@@ -1,3 +1,4 @@
+import 'package:app_contable/pages/register_incoming_expense_page/widgets/expenses_widget.dart';
 import 'package:app_contable/pages/register_incoming_expense_page/widgets/incoming_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class RegisterIncomingExpensePage extends StatelessWidget {
         ),
         body: const TabBarView(children: [
           IncomingWidget(),
-          Center(child: Text('Gasto')),
+          ExpensesWidget(),
           Center(child: Text('Presupuesto')),
           Center(child: Text('Prestamos')),
         ]),
