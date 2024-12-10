@@ -141,7 +141,6 @@ class _LoginPageState extends State<LoginPage> {
       final email = _emailController.text;
       final password = _passwordController.text;
       if (await LoginLogic().verifyUser(email, password)) {
-        showCustomSnackBar('Logueado');
         nextPage();
       } else {
         showCustomSnackBar('No existe el usuario');

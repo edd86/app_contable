@@ -96,13 +96,10 @@ class TransactionPage extends StatelessWidget {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                GlobalVariables.dateToString(
-                                    DateTime.parse(transaction.date)),
+                            Text(GlobalVariables.dateToString(transaction.date),
                                 style: titleStyle),
                             Text(
-                              GlobalVariables.timeToString(
-                                  DateTime.parse(transaction.date)),
+                              GlobalVariables.timeToString(transaction.date),
                               style: titleStyle,
                             ),
                           ],

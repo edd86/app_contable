@@ -1,6 +1,6 @@
 class Transaction {
   int? id;
-  String date;
+  DateTime date;
   String type;
   String? description;
   double amount;
@@ -18,7 +18,7 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],
-      date: json['date'],
+      date: DateTime.parse(json['date']),
       type: json['type'],
       description: json['description'],
       amount: json['amount'],
@@ -29,7 +29,7 @@ class Transaction {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'date': date,
+      'date': date.toIso8601String(),
       'type': type,
       'description': description,
       'amount': amount,
@@ -39,7 +39,7 @@ class Transaction {
 
   Transaction copyWith({
     int? id,
-    String? date,
+    DateTime? date,
     String? type,
     String? description,
     double? amount,

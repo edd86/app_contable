@@ -52,9 +52,10 @@ CREATE TABLE Debts (
 String createBudgetsTable = '''
 CREATE TABLE Budgets (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  date TEXT NOT NULL,
-  income_budget REAL NOT NULL,
-  expense_budget REAL NOT NULL,
+  initial_date TEXT NOT NULL,
+  final_date TEXT NOT NULL,
+  amount_budget REAL NOT NULL,
+  description REAL NOT NULL,
   user_id INTEGER,
   FOREIGN KEY (user_id) REFERENCES Users (id)
 );

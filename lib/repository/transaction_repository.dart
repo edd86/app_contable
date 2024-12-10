@@ -21,6 +21,7 @@ class TransactionRepository {
       for (var element in transactions) {
         transactionsRegistered.add(Transaction.fromJson(element));
       }
+      transactionsRegistered.sort((a, b) => b.date.compareTo(a.date));
       return transactionsRegistered;
     } catch (e) {
       print(e.toString());

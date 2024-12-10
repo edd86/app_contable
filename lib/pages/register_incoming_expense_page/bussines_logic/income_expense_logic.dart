@@ -6,7 +6,7 @@ class IncomeExpenseLogic {
   Transaction createTransaction(
       DateTime date, String type, String description, double amount, int userId) {
     return Transaction(
-      date: date.toIso8601String(), //2024-01-01T00:00:00.000Z
+      date: date, //2024-01-01T00:00:00.000Z
       type: type,
       description: description,
       amount: amount,
