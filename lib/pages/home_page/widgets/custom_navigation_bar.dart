@@ -1,3 +1,4 @@
+import 'package:app_contable/pages/home_page/widgets/budgets_page.dart';
 import 'package:app_contable/pages/home_page/widgets/destinations_bar.dart';
 import 'package:app_contable/pages/home_page/widgets/transaction_page.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       child: Scaffold(
         body: <Widget>[
           const TransactionPage(),
-          Container(
-            color: Colors.blue,
-          ),
+          const BudgetsPage(),
           Container(
             color: Colors.redAccent,
           )

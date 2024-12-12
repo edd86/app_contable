@@ -20,8 +20,8 @@ class Budget {
       id: json['id'],
       initialDate: DateTime.parse(json['initial_date']),
       finalDate: DateTime.parse(json['final_date']),
-      amountBudget: json['income_budget'],
-      description: json['expense_budget'],
+      amountBudget: json['amount_budget'],
+      description: json['description'],
       userId: json['user_id'],
     );
   }

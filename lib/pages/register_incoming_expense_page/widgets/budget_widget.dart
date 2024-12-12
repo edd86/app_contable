@@ -1,3 +1,5 @@
+import 'package:app_contable/providers/export_providers.dart';
+import 'package:app_contable/repository/budget_repository.dart';
 import 'package:app_contable/variables/global_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class _BudgetWidgetState extends State<BudgetWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  DateTime initDate = DateTime.now();  //2024-12-10T08:19:30.526Z
+  DateTime initDate = DateTime.now(); //2024-12-10T08:19:30.526Z
   DateTime finalDate = DateTime.now(); //2024-12-10T08:19:30.656Z
 
   @override
@@ -76,12 +78,16 @@ class _BudgetWidgetState extends State<BudgetWidget> {
                   TextButton(
                     child: Text(
                         'Inicial: ${GlobalVariables.dateToString(initDate)}'),
-                    onPressed: () {},
+                    onPressed: () {
+                      _selectedInitDate();
+                    },
                   ),
                   TextButton(
                     child: Text(
                         'Final: ${GlobalVariables.dateToString(finalDate)}'),
-                    onPressed: () {},
+                    onPressed: () {
+                      _selectedEndDate();
+                    },
                   ),
                 ],
               ),
@@ -96,8 +102,8 @@ class _BudgetWidgetState extends State<BudgetWidget> {
                       finalDate.day != initDate.day) {
                     final amount = double.parse(_amountController.text);
                     final description = _descriptionController.text;
+                    //TODO: verificar que el presupuesto no supere el saldo
                     if (amount > 0.0) {
-                      //TODO: Capturar Fechas de inicio y final
                       final budget = BudgetLogic().createBudget(
                         amount,
                         description,
@@ -105,8 +111,16 @@ class _BudgetWidgetState extends State<BudgetWidget> {
                         finalDate,
                         GlobalVariables.userLogged!.id!,
                       );
+                      final newBudget =
+                          await BudgetRepository().addBudget(budget);
+                      if (BudgetLogic.validateBudget(newBudget)) {
+                        showCustomSnackBar('Presupuesto registrado');
+                      } else {
+                        showCustomSnackBar('Presupuesto no se registro');
+                      }
                     } else {
-                      showCustomSnackBar('El monto debe ser mayor a 0');
+                      showCustomSnackBar(
+                          'El monto debe ser mayor a 0 y menor al Saldo');
                     }
                   } else {
                     showCustomSnackBar(
@@ -131,5 +145,33 @@ class _BudgetWidgetState extends State<BudgetWidget> {
         backgroundColor: Colors.deepPurple,
       ),
     );
+  }
+
+  void _selectedInitDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initDate,
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(DateTime.now().year).add(const Duration(days: 365)),
+    );
+    if (pickedDate != null && pickedDate != initDate) {
+      setState(() {
+        initDate = pickedDate;
+      });
+    }
+  }
+
+  void _selectedEndDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: finalDate,
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(DateTime.now().year).add(const Duration(days: 395)),
+    );
+    if (pickedDate != null && pickedDate != finalDate) {
+      setState(() {
+        finalDate = pickedDate;
+      });
+    }
   }
 }

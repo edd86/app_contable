@@ -12,4 +12,21 @@ class BudgetRepository {
       return null;
     }
   }
+
+  Future<List<Budget>?> getBudgets() async {
+    List<Budget> budgets = [];
+    try {
+      final db = await DatabaseHelper().database;
+      final budgetsInDatabase = await db.query('Budgets');
+      for (var budget in budgetsInDatabase) {
+        budgets.add(Budget.fromJson(budget));
+      }
+      return budgets;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  
 }

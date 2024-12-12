@@ -28,4 +28,29 @@ class TransactionRepository {
       return null;
     }
   }
+
+  Future<List<Transaction>?> getTransactionsByDates(
+      DateTime initialDate, DateTime finalDate) async {
+    List<Transaction>? transactionsRegistered = await getTransactions();
+    if (transactionsRegistered != null) {
+      transactionsRegistered.removeWhere((transaction) =>
+          transaction.date.isBefore(initialDate) &&
+          transaction.date.isAfter(finalDate));
+      return transactionsRegistered
+          .where((transaction) => transaction.type == 'expense')
+          .toList();
+    } else {
+      return null;
+    }
+  }
+
+  /* double getSaldo() async {
+    final transactionsRegistered = await getTransactions();
+    if (transactionsRegistered != null) {
+      return transactionsRegistered.fold(
+          0.0, (previousValue, element) => previousValue + element.amount);
+    }
+
+  } */
+  //saldo = _transactions!.fold(0.0, (previousValue, element) => previousValue + element.amount);
 }
