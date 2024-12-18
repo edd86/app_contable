@@ -1,4 +1,5 @@
 import 'package:app_contable/pages/register_incoming_expense_page/widgets/budget_widget.dart';
+import 'package:app_contable/pages/register_incoming_expense_page/widgets/debt_widget.dart';
 import 'package:app_contable/pages/register_incoming_expense_page/widgets/expenses_widget.dart';
 import 'package:app_contable/pages/register_incoming_expense_page/widgets/incoming_widget.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class RegisterIncomingExpensePage extends StatelessWidget {
           IncomingWidget(),
           ExpensesWidget(),
           BudgetWidget(),
-          Center(child: Text('Prestamos')),
+          DebtWidget(),
         ]),
       ),
     );

@@ -44,13 +44,16 @@ class TransactionRepository {
     }
   }
 
-  /* double getSaldo() async {
+  Future<double?> getSaldo() async {
     final transactionsRegistered = await getTransactions();
+    double saldo = 0.0;
     if (transactionsRegistered != null) {
-      return transactionsRegistered.fold(
-          0.0, (previousValue, element) => previousValue + element.amount);
+      for (var transaction in transactionsRegistered) {
+        saldo += transaction.amount;
+      }
+      return saldo;
+    } else {
+      return null;
     }
-
-  } */
-  //saldo = _transactions!.fold(0.0, (previousValue, element) => previousValue + element.amount);
+  }
 }

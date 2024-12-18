@@ -11,7 +11,7 @@ class BudgetsPage extends StatelessWidget {
     return Scaffold(
       body: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: size.height * .05,
+            vertical: size.height * .005,
             horizontal: size.width * .1,
           ),
           child: FutureBuilder(

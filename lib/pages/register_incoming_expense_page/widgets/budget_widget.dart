@@ -1,8 +1,6 @@
-import 'package:app_contable/providers/export_providers.dart';
 import 'package:app_contable/repository/budget_repository.dart';
 import 'package:app_contable/variables/global_variables.dart';
 import 'package:flutter/material.dart';
-
 import '../bussines_logic/budget_logic.dart';
 
 class BudgetWidget extends StatefulWidget {
@@ -102,8 +100,8 @@ class _BudgetWidgetState extends State<BudgetWidget> {
                       finalDate.day != initDate.day) {
                     final amount = double.parse(_amountController.text);
                     final description = _descriptionController.text;
-                    //TODO: verificar que el presupuesto no supere el saldo
-                    if (amount > 0.0) {
+                    if (amount > 0.0 &&
+                        await BudgetLogic.validateAmount(amount)) {
                       final budget = BudgetLogic().createBudget(
                         amount,
                         description,

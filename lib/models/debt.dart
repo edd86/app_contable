@@ -2,7 +2,7 @@ class Debt {
   int? id;
   String creditor;
   double amount;
-  String dueDate;
+  DateTime dueDate;
   String? description;
   int? userId;
 
@@ -20,7 +20,7 @@ class Debt {
       id: json['id'],
       creditor: json['creditor'],
       amount: json['amount'],
-      dueDate: json['due_date'],
+      dueDate: DateTime.parse(json['due_date']),
       description: json['description'],
       userId: json['user_id'],
     );
@@ -31,7 +31,7 @@ class Debt {
       'id': id,
       'creditor': creditor,
       'amount': amount,
-      'due_date': dueDate,
+      'due_date': dueDate.toIso8601String(),
       'description': description,
       'user_id': userId,
     };
@@ -49,7 +49,7 @@ class Debt {
       id: id ?? this.id,
       creditor: creditor ?? this.creditor,
       amount: amount ?? this.amount,
-      dueDate: dueDate ?? this.dueDate,
+      dueDate: dueDate != null ? DateTime.parse(dueDate) : this.dueDate,
       description: description ?? this.description,
       userId: userId ?? this.userId,
     );
