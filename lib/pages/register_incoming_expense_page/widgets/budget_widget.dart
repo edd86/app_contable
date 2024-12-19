@@ -16,6 +16,11 @@ class _BudgetWidgetState extends State<BudgetWidget> {
   final TextEditingController _descriptionController = TextEditingController();
   DateTime initDate = DateTime.now(); //2024-12-10T08:19:30.526Z
   DateTime finalDate = DateTime.now(); //2024-12-10T08:19:30.656Z
+  final labelStyle = const TextStyle(
+    fontSize: 12,
+    color: Colors.deepPurple,
+    fontWeight: FontWeight.w600,
+  );
 
   @override
   void dispose() {
@@ -36,17 +41,19 @@ class _BudgetWidgetState extends State<BudgetWidget> {
           child: Column(
             children: [
               TextFormField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  label: Text('Monto del Presupuesto'),
+                controller: _descriptionController,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.sentences,
+                style: labelStyle.copyWith(color: Colors.black),
+                decoration: InputDecoration(
+                  label: Text(
+                    'Descripción',
+                    style: labelStyle,
+                  ),
                 ),
                 validator: (value) {
                   if (value!.isEmpty || value.isEmpty) {
-                    return 'Debe llenar un monto de presupuesto';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Debe ingresar un monto válido';
+                    return 'Debe agregar una descripción';
                   }
                   return null;
                 },
@@ -55,14 +62,21 @@ class _BudgetWidgetState extends State<BudgetWidget> {
                 height: size.height * .05,
               ),
               TextFormField(
-                controller: _descriptionController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  label: Text('Descripción'),
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                style: labelStyle.copyWith(color: Colors.black),
+                decoration: InputDecoration(
+                  label: Text(
+                    'Monto',
+                    style: labelStyle,
+                  ),
                 ),
                 validator: (value) {
                   if (value!.isEmpty || value.isEmpty) {
-                    return 'Debe agregar una descripción';
+                    return 'Debe llenar un monto de presupuesto';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Debe ingresar un monto válido';
                   }
                   return null;
                 },
@@ -113,6 +127,7 @@ class _BudgetWidgetState extends State<BudgetWidget> {
                           await BudgetRepository().addBudget(budget);
                       if (BudgetLogic.validateBudget(newBudget)) {
                         showCustomSnackBar('Presupuesto registrado');
+                        _cleanControllers();
                       } else {
                         showCustomSnackBar('Presupuesto no se registro');
                       }
@@ -171,5 +186,14 @@ class _BudgetWidgetState extends State<BudgetWidget> {
         finalDate = pickedDate;
       });
     }
+  }
+
+  void _cleanControllers() {
+    _amountController.clear();
+    _descriptionController.clear();
+    setState(() {
+      initDate = DateTime.now();
+      finalDate = DateTime.now();
+    });
   }
 }

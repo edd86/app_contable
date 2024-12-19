@@ -1,5 +1,8 @@
+import 'package:app_contable/repository/debt_repository.dart';
 import 'package:app_contable/variables/global_variables.dart';
 import 'package:flutter/material.dart';
+
+import '../bussines_logic/debt_logic.dart';
 
 class DebtWidget extends StatefulWidget {
   const DebtWidget({super.key});
@@ -45,6 +48,8 @@ class _DebtWidgetState extends State<DebtWidget> {
               TextFormField(
                 controller: _creditorController,
                 keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                style: labeStyle.copyWith(color: Colors.black),
                 decoration: InputDecoration(
                   label: Text(
                     'Titular',
@@ -64,6 +69,8 @@ class _DebtWidgetState extends State<DebtWidget> {
               TextFormField(
                 controller: _descriptionController,
                 keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.sentences,
+                style: labeStyle.copyWith(color: Colors.black),
                 decoration: InputDecoration(
                   label: Text(
                     'Descripción',
@@ -77,9 +84,10 @@ class _DebtWidgetState extends State<DebtWidget> {
               TextFormField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
+                style: labeStyle.copyWith(color: Colors.black),
                 decoration: InputDecoration(
                   label: Text(
-                    'Monto del Prestamo',
+                    'Monto',
                     style: labeStyle,
                   ),
                 ),
@@ -98,7 +106,9 @@ class _DebtWidgetState extends State<DebtWidget> {
               ),
               TextButton(
                 child: Text(GlobalVariables.dateToString(dueDate)),
-                onPressed: () {},
+                onPressed: () {
+                  _selectedDate();
+                },
               ),
               SizedBox(
                 height: size.height * .045,
@@ -120,7 +130,52 @@ class _DebtWidgetState extends State<DebtWidget> {
       final creditor = _creditorController.text;
       final description = _descriptionController.text;
       final amount = double.parse(_amountController.text);
-      //TODO: Agregar el prestamo a la base de datos
+      final debt = DebtLogic.createDebt(
+        creditor: creditor,
+        description: description,
+        amount: amount,
+        dueDate: dueDate,
+        userId: GlobalVariables.userLogged!.id,
+      );
+      final newDebt = await DebtRepository().addDebt(debt);
+      if (DebtLogic.debtValidation(newDebt)) {
+        showCustomSnackBar('Préstamo registrado exitosamente');
+        _cleanControllers();
+      } else {
+        showCustomSnackBar('Error al registrar el préstamo');
+      }
     }
+  }
+
+  void showCustomSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.deepPurple,
+      ),
+    );
+  }
+
+  void _selectedDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: dueDate,
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(DateTime.now().year).add(const Duration(days: 365)),
+    );
+    if (pickedDate != null) {
+      setState(() {
+        dueDate = pickedDate;
+      });
+    }
+  }
+
+  void _cleanControllers() {
+    _creditorController.clear();
+    _amountController.clear();
+    _descriptionController.clear();
+    setState(() {
+      dueDate = DateTime.now();
+    });
   }
 }

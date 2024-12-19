@@ -27,7 +27,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         ][currentIndex],
         bottomNavigationBar: NavigationBar(
           destinations: DestinationsBar.destinations,
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.deepPurple[200],
           indicatorColor: const Color(0xFF00b79a),
           selectedIndex: currentIndex,
           onDestinationSelected: (value) {
@@ -37,12 +37,15 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
+          backgroundColor: Colors.deepPurple,
+          child: const Icon(
+            Icons.add,
+            color: Color(0xFF00b79a),
+          ),
           onPressed: () =>
               Navigator.pushNamed(context, Routes.registerIncomingExpensePage),
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }

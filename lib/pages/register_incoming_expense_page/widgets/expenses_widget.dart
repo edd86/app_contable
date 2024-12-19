@@ -11,6 +11,11 @@ import '../bussines_logic/income_expense_logic.dart';
 
 final TextEditingController _expenseController = TextEditingController();
 final TextEditingController _descriptionController = TextEditingController();
+const labeStyle = TextStyle(
+  fontSize: 12,
+  color: Colors.deepPurple,
+  fontWeight: FontWeight.w600,
+);
 
 class ExpensesWidget extends StatelessWidget {
   const ExpensesWidget({super.key});
@@ -25,20 +30,29 @@ class ExpensesWidget extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: _expenseController,
-              keyboardType: TextInputType.number,
+              controller: _descriptionController,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.sentences,
+              style: labeStyle.copyWith(color: Colors.black),
               decoration: const InputDecoration(
-                label: Text('Monto del Gasto'),
+                label: Text(
+                  'Descripción',
+                  style: labeStyle,
+                ),
               ),
             ),
             SizedBox(
               height: size.height * 0.025,
             ),
             TextField(
-              controller: _descriptionController,
-              keyboardType: TextInputType.text,
+              controller: _expenseController,
+              keyboardType: TextInputType.number,
+              style: labeStyle.copyWith(color: Colors.black),
               decoration: const InputDecoration(
-                label: Text('Descripción'),
+                label: Text(
+                  'Monto',
+                  style: labeStyle,
+                ),
               ),
             ),
             SizedBox(

@@ -10,6 +10,11 @@ import 'package:app_contable/providers/export_providers.dart';
 
 final TextEditingController _incomingController = TextEditingController();
 final TextEditingController _descriptionController = TextEditingController();
+const labeStyle = TextStyle(
+  fontSize: 12,
+  color: Colors.deepPurple,
+  fontWeight: FontWeight.w600,
+);
 
 class IncomingWidget extends StatelessWidget {
   const IncomingWidget({super.key});
@@ -24,20 +29,29 @@ class IncomingWidget extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: _incomingController,
-              keyboardType: TextInputType.number,
+              controller: _descriptionController,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.sentences,
+              style: labeStyle.copyWith(color: Colors.black),
               decoration: const InputDecoration(
-                label: Text('Monto del Ingreso'),
+                label: Text(
+                  'Descripción',
+                  style: labeStyle,
+                ),
               ),
             ),
             SizedBox(
               height: size.height * 0.025,
             ),
             TextField(
-              controller: _descriptionController,
-              keyboardType: TextInputType.text,
+              controller: _incomingController,
+              keyboardType: TextInputType.number,
+              style: labeStyle.copyWith(color: Colors.black),
               decoration: const InputDecoration(
-                label: Text('Descripción'),
+                label: Text(
+                  'Monto',
+                  style: labeStyle,
+                ),
               ),
             ),
             SizedBox(
@@ -99,7 +113,7 @@ class IncomingWidget extends StatelessWidget {
     _incomingController.clear();
     _descriptionController.clear();
   }
-  
+
   void _modifyListeners(BuildContext context) {
     final notifier = Provider.of<TransactionsProvider>(context, listen: false);
     notifier.loadTransactions();

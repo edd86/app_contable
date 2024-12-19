@@ -7,7 +7,7 @@ class TransactionPage extends StatelessWidget {
   const TransactionPage({super.key});
 
   final titleStyle = const TextStyle(
-    fontSize: 12,
+    fontSize: 10,
     color: Colors.deepPurple,
     fontWeight: FontWeight.bold,
   );
@@ -104,13 +104,22 @@ class TransactionPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        subtitle: Text(transaction.description ?? ''),
+                        subtitle: Text(
+                          transaction.description ?? '',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         trailing: Text(
                           transaction.amount.toString(),
                           style: TextStyle(
-                              color: transaction.type == 'expense'
-                                  ? Colors.red
-                                  : Colors.deepPurple),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            color: transaction.type == 'expense'
+                                ? Colors.red
+                                : Colors.deepPurple,
+                          ),
                         ),
                       );
                     },
