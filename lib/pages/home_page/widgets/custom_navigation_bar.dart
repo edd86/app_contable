@@ -4,6 +4,7 @@ import 'package:app_contable/pages/home_page/widgets/transaction_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../routes/routes.dart';
+import 'debts_page.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -21,9 +22,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         body: <Widget>[
           const TransactionPage(),
           const BudgetsPage(),
-          Container(
-            color: Colors.redAccent,
-          )
+          const DebtsPage(),
         ][currentIndex],
         bottomNavigationBar: NavigationBar(
           destinations: DestinationsBar.destinations,

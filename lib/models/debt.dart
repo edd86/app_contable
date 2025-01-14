@@ -6,6 +6,8 @@ class Debt {
   String? description;
   int? userId;
 
+  //TODO: Agregar una flag para saber si la deuda fue pagada
+
   Debt({
     this.id,
     required this.creditor,
