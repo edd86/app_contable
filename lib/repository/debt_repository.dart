@@ -1,5 +1,4 @@
 import 'package:app_contable/models/debt.dart';
-
 import '../data/database_helper.dart';
 
 class DebtRepository {
@@ -26,6 +25,21 @@ class DebtRepository {
     } catch (e) {
       print(e.toString());
       return [];
+    }
+  }
+
+  Future<bool> payDebt(Debt debt, double amount) async {
+    try {
+      final db = await DatabaseHelper().database;
+      final result = await db.query('Debts', where: 'id = ?', whereArgs: [debt.id]);
+      final oldDebt = Debt.fromJson(result.first);
+      final newDebt = oldDebt.copyWith(amount: oldDebt.amount - amount);
+      await db.update('Debts', newDebt.toJson(), where: 'id = ?', whereArgs: [debt.id]);
+      return true;
+    }
+    catch (e) {
+      print(e.toString());
+      return false;
     }
   }
 }

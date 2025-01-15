@@ -61,6 +61,7 @@ class ExpensesWidget extends StatelessWidget {
             ElevatedButton.icon(
               label: const Text('Registrar'),
               icon: const Icon(Icons.save),
+              //TODO: Validar gastos por presupuesto.
               onPressed: () async {
                 if (_expenseController.text.isEmpty &&
                     _descriptionController.text.isEmpty) {
